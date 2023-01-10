@@ -10,7 +10,8 @@
         "build:scss": "node scripts/build-scss.js",
         "clean": "node scripts/clean.js",
         "start": "npm run build && node scripts/start.js",
-        "start:debug": "npm run build && node scripts/start-debug.js"
+        "start:debug": "npm run build && node scripts/start-debug.js",
+        "gh-deploy": "git push origin :gh-pages && git subtree push --prefix dist origin gh-pages"
     },
     "description": "A full page image background with fixed bottom navigation HTML template built with Bootstrap",
     "keywords": [
