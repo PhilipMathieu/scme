@@ -26,6 +26,25 @@
                 </div>
             </div>
         </nav>
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-lg-6"><h1>Conserved Lands in Maine</h1></div>
+            </div>
+            <div class="row pt-2" id="map"><div class="col-12" id="observablehq-container"></div></div>
+            <div class="row pt-2" id="search"><div class="col-12" id="observablehq-search"></div></div>
+            <div class="row pt-2" id="table"><div class="col-12" id="observablehq-table"></div></div>
+        </div>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css" />
+        <script type="module">
+            import { Runtime, Inspector } from 'https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js';
+            import define from 'https://api.observablehq.com/@philipmathieu/maplibre-arcgis-table@146.js?v=3';
+            new Runtime().module(define, (name) => {
+                if (name === 'container') return new Inspector(document.querySelector('#observablehq-container'));
+                if (name === 'viewof search') return new Inspector(document.querySelector('#observablehq-search'));
+                if (name === 'table') return new Inspector(document.querySelector('#observablehq-table'));
+                return ['map'].includes(name);
+            });
+        </script>
     </body>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

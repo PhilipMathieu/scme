@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    .container.px-4.px-lg-5
+        .row.gx-4.gx-lg-5
+            .col-lg-6
+                h1 Conserved Lands in Maine
+
+        .row.pt-2#map
+            .col-12#observablehq-container
+        .row.pt-2#search
+            .col-12#observablehq-search
+        .row.pt-2#table
+            .col-12#observablehq-table
+
+    link(rel="stylesheet",href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css")
+    script(type="module").
+        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+        import define from "https://api.observablehq.com/@philipmathieu/maplibre-arcgis-table@146.js?v=3";
+        new Runtime().module(define, name => {
+            if (name === "container") return new Inspector(document.querySelector("#observablehq-container"));
+            if (name === "viewof search") return new Inspector(document.querySelector("#observablehq-search"));
+            if (name === "table") return new Inspector(document.querySelector("#observablehq-table"));
+            return ["map"].includes(name);
+        });
