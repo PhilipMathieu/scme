@@ -1,0 +1,64 @@
+extends layout
+
+block content
+    .container.px-4.px-lg-5
+        .row.gx-4.gx-lg-5
+            .col-lg-6
+                h1 Climate Equity and Justice Screening Tool
+
+        .row.pt-2.vh-100#map
+    
+    style.
+        .maplibregl-popup {
+            max-width: 400px;
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        }
+    
+    script(src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js")
+    link(href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css",rel="stylesheet")
+    script(type="module").
+        var map = new maplibregl.Map({
+        container: 'map',
+        style:
+        'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
+        center: [-69.397, 45.294],
+        zoom: 5.84
+        });
+        
+        map.on('load', function () {
+        map.addSource('cejst', {
+        'type': 'geojson',
+        'data': "assets/data/cejst-1.0-me.geojson"
+        });
+        
+        map.addLayer({
+        'id': 'cejst-boundary',
+        'type': 'fill',
+        'source': 'cejst',
+        'paint': {
+        'fill-color': ["interpolate",["linear"],["get", "CC"],0,"rgba(0, 0, 255, 0)",6,"crimson"],
+        'fill-outline-color': 'gray',
+        'fill-opacity': 0.5
+        }
+        });
+
+        // When a click event occurs on a feature in the states layer, open a popup at the
+        // location of the click, with description HTML from its properties.
+        map.on('click', 'cejst-boundary', function (e) {
+        new maplibregl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML("County: "+e.features[0].properties.CF+"<br/>Census ID: "+e.features[0].properties.GEOID10+"<br/>Burden Categories: "+e.features[0].properties.CC)
+        .addTo(map);
+        });
+        
+        // Change the cursor to a pointer when the mouse is over the states layer.
+        map.on('mouseenter', 'cejst-boundary', function () {
+        map.getCanvas().style.cursor = 'pointer';
+        });
+        
+        // Change it back to a pointer when it leaves.
+        map.on('mouseleave', 'cejst-boundary', function () {
+        map.getCanvas().style.cursor = '';
+        });
+        
+        });
