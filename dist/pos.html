@@ -20,9 +20,9 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="conservedlands.html">Conserved Lands</a></li>
+                        <li class="nav-item"><a class="nav-link" href="conservedlands.html">ME Conserved Lands</a></li>
                         <li class="nav-item"><a class="nav-link" href="cejst.html">CEJST</a></li>
-                        <li class="nav-item"><a class="nav-link" href="ejscreen.html">EJSCREEN</a></li>
+                        <li class="nav-item"><a class="nav-link" href="pos.html">NE Protected Open Space</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                     </ul>
                 </div>
@@ -30,7 +30,10 @@
         </nav>
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5">
-                <div class="col-lg-6"><h1>Environmental Justice SCREEN</h1></div>
+                <div class="col-lg-6">
+                    <h1>Harvard Forest Protected Open Space</h1>
+                    <p></p>
+                </div>
             </div>
             <div class="row pt-2 vh-100" id="map"></div>
         </div>
@@ -51,29 +54,26 @@
             });
 
             map.on('load', function () {
-                map.addSource('ejscreen', {
+                map.addSource('pos', {
                     type: 'geojson',
-                    data: 'assets/data/ejscreen-2022-me.geojson',
+                    data: 'assets/data/POSv1_1_April2021.geojson',
                 });
 
                 map.addLayer({
-                    id: 'ejscreen-boundary',
+                    id: 'pos-boundary',
                     type: 'fill',
-                    source: 'ejscreen',
+                    source: 'pos',
                     paint: {
-                        'fill-color': ['interpolate', ['linear'], ['get', 'EXCEED_COUNT_80'], 0, 'rgba(0, 0, 255, 0)', 6, 'crimson'],
+                        'fill-color': 'green',
                         'fill-outline-color': 'gray',
-                        //- 'fill-opacity': 0.5
+                        'fill-opacity': 0.5,
                     },
                 });
 
                 // When a click event occurs on a feature in the states layer, open a popup at the
                 // location of the click, with description HTML from its properties.
                 map.on('click', 'ejscreen-boundary', function (e) {
-                    new maplibregl.Popup()
-                        .setLngLat(e.lngLat)
-                        .setHTML('County: ' + e.features[0].properties.CNTY_NAME + '<br/>Census ID: ' + e.features[0].properties.ID + '<br/>Burden Categories: ' + e.features[0].properties.EXCEED_COUNT_80)
-                        .addTo(map);
+                    new maplibregl.Popup().setLngLat(e.lngLat).setHTML('Test').addTo(map);
                 });
 
                 // Change the cursor to a pointer when the mouse is over the states layer.
