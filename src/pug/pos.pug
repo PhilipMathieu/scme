@@ -4,7 +4,8 @@ block content
     .container.px-4.px-lg-5
         .row.gx-4.gx-lg-5
             .col-lg-6
-                h1 Environmental Justice SCREEN
+                h1 Harvard Forest Protected Open Space
+                p 
 
         .row.pt-2.vh-100#map
     
@@ -26,19 +27,19 @@ block content
         });
         
         map.on('load', function () {
-        map.addSource('ejscreen', {
+        map.addSource('pos', {
         'type': 'geojson',
-        'data': "assets/data/ejscreen-2022-me.geojson"
+        'data': "assets/data/POSv1_1_April2021.geojson"
         });
         
         map.addLayer({
-        'id': 'ejscreen-boundary',
+        'id': 'pos-boundary',
         'type': 'fill',
-        'source': 'ejscreen',
+        'source': 'pos',
         'paint': {
-        'fill-color': ["interpolate",["linear"],["get", "EXCEED_COUNT_80"],0,"rgba(0, 0, 255, 0)",6,"crimson"],
+        'fill-color': "green",
         'fill-outline-color': 'gray',
-        //- 'fill-opacity': 0.5
+        'fill-opacity': 0.5
         }
         });
 
@@ -47,7 +48,7 @@ block content
         map.on('click', 'ejscreen-boundary', function (e) {
         new maplibregl.Popup()
         .setLngLat(e.lngLat)
-        .setHTML("County: "+e.features[0].properties.CNTY_NAME+"<br/>Census ID: "+e.features[0].properties.ID+"<br/>Burden Categories: "+e.features[0].properties.EXCEED_COUNT_80)
+        .setHTML("Test")
         .addTo(map);
         });
         
