@@ -28,7 +28,7 @@ block content
         map.on('load', function () {
         map.addSource('cejst', {
         'type': 'geojson',
-        'data': "assets/data/cejst-1.0-me.geojson"
+        'data': "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/usa_november_2022/FeatureServer/0/query?f=pgeojson&where=GEOID10 LIKE '23%'&outfields=*"
         });
         
         map.addLayer({
